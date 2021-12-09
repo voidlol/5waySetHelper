@@ -32,6 +32,8 @@ public class Parser {
         }
 
         System.out.println(ds);
+        System.out.println(ds.getAverageSetPrice(140));
+        System.out.println(ds.getAverageSetPrice(140) / 140);
     }
 
 }

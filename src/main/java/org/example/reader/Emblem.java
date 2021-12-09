@@ -1,5 +1,6 @@
 package org.example.reader;
 
+
 import java.text.DecimalFormat;
 
 public abstract class Emblem {
@@ -39,5 +40,9 @@ public abstract class Emblem {
                 + ", chaos orbs spent: " + chaosSpent
                 + ", exalted orbs spent: " + df.format(exaltedSpent)
                 + (splinters > 0 ? ", splinters left: " + splinters : "");
+    }
+
+    public double getAveragePrice(int ratio) {
+        return (chaosSpent + exaltedSpent * ratio) / amount;
     }
 }

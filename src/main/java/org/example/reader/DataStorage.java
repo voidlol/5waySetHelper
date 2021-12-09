@@ -38,4 +38,14 @@ public class DataStorage {
                 + templar.toString() + "\n"
                 + maraketh.toString();
     }
+
+    public double getAverageSetPrice(int ratio) {
+        double eternalAverage = eternal.getAveragePrice(ratio);
+        double karuiAverage = karui.getAveragePrice(ratio);
+        double vaalAverage = vaal.getAveragePrice(ratio);
+        double templarAverage = templar.getAveragePrice(ratio);
+        double marakethAverage = maraketh.getAveragePrice(ratio);
+
+        return eternalAverage + karuiAverage + vaalAverage + templarAverage + marakethAverage;
+    }
 }
