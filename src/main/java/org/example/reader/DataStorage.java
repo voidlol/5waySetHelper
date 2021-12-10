@@ -10,9 +10,9 @@ public class DataStorage {
     private static final Eternal eternal = new Eternal();
     private static final Karui karui = new Karui();
     private static DataStorage instance;
+    private static final int exaltedPrice = Trade.getExPrice();
 
     private DataStorage() {
-
     }
 
     public static DataStorage getInstance() {
@@ -39,13 +39,21 @@ public class DataStorage {
                 + maraketh.toString();
     }
 
-    public double getAverageSetPrice(int ratio) {
-        double eternalAverage = eternal.getAveragePrice(ratio);
-        double karuiAverage = karui.getAveragePrice(ratio);
-        double vaalAverage = vaal.getAveragePrice(ratio);
-        double templarAverage = templar.getAveragePrice(ratio);
-        double marakethAverage = maraketh.getAveragePrice(ratio);
+    public double getAverageSetPriceC() {
+        double eternalAverage = eternal.getAveragePrice();
+        double karuiAverage = karui.getAveragePrice();
+        double vaalAverage = vaal.getAveragePrice();
+        double templarAverage = templar.getAveragePrice();
+        double marakethAverage = maraketh.getAveragePrice();
 
         return eternalAverage + karuiAverage + vaalAverage + templarAverage + marakethAverage;
+    }
+
+    public double getAverageSetPriceEx() {
+        return getAverageSetPriceC() / exaltedPrice;
+    }
+
+    public int getExaltedPrice() {
+        return exaltedPrice;
     }
 }

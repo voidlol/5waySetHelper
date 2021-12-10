@@ -2,38 +2,36 @@ package org.example.reader;
 import org.apache.commons.lang3.StringUtils;
 import org.example.domain.Trade;
 
-import java.util.ArrayList;
-import java.util.List;
-//<tr><td>21/11/2021 17:09:24</td><td>Buy</td><td>2</td><td>Exalted Orb</td><td>291</td><td>Chaos Orb</td><td>regret_base (2)</td><td>KayfatVol</td><td>Completed</td></tr>
-//<tr><td>24/11/2021 16:49:50</td><td>Sell</td><td>12</td><td>Chaos Orb</td><td>15</td><td>Timeless Templar Splinter</td><td>regret_base (12)</td><td>Tbxi</td><td>Failed</td></tr>
+import java.text.DecimalFormat;
+import java.util.HashSet;
+
 public class Parser {
 
-    private List<Trade> trades = new ArrayList<>();
+    private boolean firstRun = true;
+    private final DecimalFormat df = new DecimalFormat("0.##");
+    private final DataStorage ds = DataStorage.getInstance();
+    private final HashSet<Trade> tradeHashSet = new HashSet<>();
 
     public void readString(String line) {
         for (String s: StringUtils.substringsBetween(line, "<tr>", "</tr>")) {
             String[] params = StringUtils.substringsBetween(s, "<td>", "</td>");
-            if (params[8].equals("Completed") && !params[5].equals("Chaos Orb")) {
-                Trade currentTrade = new Trade(params[0], params[5], params[3], Integer.parseInt(params[4]), Double.parseDouble(params[2].replace(',','.')));
-                trades.add(currentTrade);
-                System.out.println(currentTrade);
+            if (params.length == 9 && params[8].equals("Completed") && !params[5].equals("Chaos Orb") && !params[5].equals("Exalted Orb")) {
+                Trade currentTrade = new Trade(params[0], params[5], params[3], Integer.parseInt(params[4]), Double.parseDouble(params[2].replace(',', '.')));
+                if (!firstRun && !tradeHashSet.contains(currentTrade)) {
+                    ds.add(currentTrade);
+                }
+                tradeHashSet.add(currentTrade);
             }
         }
+        firstRun = false;
 
-        System.out.println(trades.size());
-
-        sortTrades();
+        showTrades();
     }
 
-    private void sortTrades() {
-        DataStorage ds = DataStorage.getInstance();
-        for (Trade t: this.trades) {
-            ds.add(t);
-        }
-
+    private void showTrades() {
         System.out.println(ds);
-        System.out.println(ds.getAverageSetPrice(140));
-        System.out.println(ds.getAverageSetPrice(140) / 140);
+        System.out.println(df.format(ds.getAverageSetPriceC()) + " Chaos Orbs");
+        System.out.println(df.format(ds.getAverageSetPriceEx()) + " Exalted Orbs");
     }
 
 }
