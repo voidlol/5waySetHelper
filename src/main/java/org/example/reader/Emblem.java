@@ -1,8 +1,5 @@
 package org.example.reader;
 
-
-import org.example.domain.Trade;
-
 import java.text.DecimalFormat;
 
 public abstract class Emblem {
@@ -43,8 +40,8 @@ public abstract class Emblem {
         }
         if (currency.equals("Exalted Orb")) {
             exaltedSpent += price;
-            maxPriceE = Math.max(price * Trade.getExPrice(), maxPriceE);
-            minPriceE = (minPriceE == 0) ? price * Trade.getExPrice() : (Math.min(minPriceE, price * Trade.getExPrice()));
+            maxPriceE = Math.max(price * ExaltedPrice.getExPrice(), maxPriceE);
+            minPriceE = (minPriceE == 0) ? price * ExaltedPrice.getExPrice() : (Math.min(minPriceE, price * ExaltedPrice.getExPrice()));
         }
     }
 
@@ -54,13 +51,14 @@ public abstract class Emblem {
         return emblemName
                 + " -> TOTAL: " + amount
                 + ", average: " + df.format(getAveragePrice())
-                + "c, c spent: " + chaosSpent
-                + ", ex spent: " + df.format(exaltedSpent)
-                + (splinters > 0 ? ", splinters left: " + splinters : "");
+                + "c, spent: " + chaosSpent
+                + "c, " + df.format(exaltedSpent)
+                + "ex " + (splinters > 0 ? ", splinters left: " + splinters : "")
+                + (totalSplinters > 0 ? "(" + totalSplinters + " for " + spentOnSplinters + "c)" : "");
     }
 
     public double getAveragePrice() {
-        double average = (chaosSpent + exaltedSpent * Trade.getExPrice()) / amount;
+        double average = (chaosSpent + exaltedSpent * ExaltedPrice.getExPrice()) / amount;
         return (Double.isNaN(average) || amount == 0) ? 0d : average;
     }
 

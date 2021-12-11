@@ -10,7 +10,7 @@ public class DataStorage {
     private static final Eternal eternal = new Eternal();
     private static final Karui karui = new Karui();
     private static DataStorage instance;
-    private static final int exaltedPrice = Trade.getExPrice();
+    private static final int exaltedPrice = ExaltedPrice.getExPrice();
 
     private DataStorage() {
     }

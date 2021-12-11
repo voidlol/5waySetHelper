@@ -2,17 +2,13 @@ package org.example.reader;
 
 public class ExaltedPrice {
 
-    private int exPrice;
+    private static int exPrice;
 
-    public ExaltedPrice(int price) {
+    public static void setExPrice(int price) {
         exPrice = price;
     }
 
-    public void setExPrice(int price) {
-        exPrice = price;
-    }
-
-    public int getExPrice() {
+    public static int getExPrice() {
         return exPrice;
     }
 }

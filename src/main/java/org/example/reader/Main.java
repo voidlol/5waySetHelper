@@ -10,7 +10,22 @@ import java.util.TimerTask;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        int exPrice = isNumeric(args[0]) ? Integer.parseInt(args[0]) : 150;
+        ExaltedPrice.setExPrice(exPrice);
+        System.out.println(exPrice);
         init();
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            int d = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     private static void init() throws IOException {

@@ -13,7 +13,6 @@ public class Trade {
     private final double price;
     private final double pricePerUnit;
     private final int amount;
-    private static final ExaltedPrice exaltedPrice = new ExaltedPrice(150);
 
     public Trade(String date, String item, String currency, int amount, double price) {
         this.amount = amount;
@@ -42,10 +41,6 @@ public class Trade {
 
     public int getAmount() {
         return amount;
-    }
-
-    public static int getExPrice() {
-        return exaltedPrice.getExPrice();
     }
 
     @Override
